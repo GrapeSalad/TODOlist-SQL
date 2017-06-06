@@ -47,11 +47,17 @@ namespace ToDoList
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM tasks WHERE category_id = @CategoryId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM tasks WHERE category_id = @CategoryId ORDER BY duedate DESC;", conn);
       SqlParameter categoryIdParameter = new SqlParameter();
       categoryIdParameter.ParameterName = "@CategoryId";
       categoryIdParameter.Value = this.GetId();
+
+      // SqlParameter taskDueDate = new SqlParameter();
+      // taskDueDateParameter.ParameterName = "@TaskDueDate";
+      // taskDueDateParameter.Value = Task.GetDueDate();
+
       cmd.Parameters.Add(categoryIdParameter);
+      // cmd.Parameters.Add(taskDueDateParameter);
       SqlDataReader rdr = cmd.ExecuteReader();
 
       List<Task> tasks = new List<Task> {};
