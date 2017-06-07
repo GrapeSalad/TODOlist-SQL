@@ -29,8 +29,6 @@ namespace ToDoList
       Get["/categories"] = _ => {
         Dictionary<string, object> model = new Dictionary<string, object>();
         var AllCategories = Category.GetAll();
-
-        // Console.WriteLine(accessPass);
         model.Add("categories", AllCategories);
         model.Add("accessTrue", Admin.GetStatus());
         return View["categories.cshtml", model];
