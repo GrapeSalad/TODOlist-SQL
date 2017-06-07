@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Nancy;
 using Nancy.ViewEngines.Razor;
+using System;
 
 namespace ToDoList
 {
@@ -9,16 +10,30 @@ namespace ToDoList
     public HomeModule()
     {
       Get["/"] = _ => {
-        List<Category> AllCategories = Category.GetAll();
-        return View["index.cshtml", AllCategories];
+        return View["login.cshtml"];
+      };
+      Post["/categories"] = _ => {
+        Admin adminTest = new Admin(Request.Form["user-name"], Request.Form["user-password"]);
+        bool isAdmin = adminTest.CheckPassword();
+        if (isAdmin)
+        {
+          Admin.SetStatus(true);
+          return View["login.cshtml"];
+        }
+        return View["login.cshtml"];
       };
       Get["/tasks"] = _ => {
         List<Task> AllTasks = Task.GetAll();
         return View["tasks.cshtml", AllTasks];
       };
       Get["/categories"] = _ => {
-        List<Category> AllCategories = Category.GetAll();
-        return View["categories.cshtml", AllCategories];
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        var AllCategories = Category.GetAll();
+
+        // Console.WriteLine(accessPass);
+        model.Add("categories", AllCategories);
+        model.Add("accessTrue", Admin.GetStatus());
+        return View["categories.cshtml", model];
       };
       Get["/categories/new"] = _ => {
         return View["categories_form.cshtml"];

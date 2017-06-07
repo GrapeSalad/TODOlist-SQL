@@ -12,7 +12,6 @@ namespace ToDoList
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=todo_test;Integrated Security=SSPI;";
     }
-
     [Fact]
     public void Test_DatabaseEmptyAtFirst()
     {

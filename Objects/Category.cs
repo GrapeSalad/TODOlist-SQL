@@ -52,12 +52,7 @@ namespace ToDoList
       categoryIdParameter.ParameterName = "@CategoryId";
       categoryIdParameter.Value = this.GetId();
 
-      // SqlParameter taskDueDate = new SqlParameter();
-      // taskDueDateParameter.ParameterName = "@TaskDueDate";
-      // taskDueDateParameter.Value = Task.GetDueDate();
-
       cmd.Parameters.Add(categoryIdParameter);
-      // cmd.Parameters.Add(taskDueDateParameter);
       SqlDataReader rdr = cmd.ExecuteReader();
 
       List<Task> tasks = new List<Task> {};
@@ -213,7 +208,7 @@ namespace ToDoList
         conn.Close();
       }
     }
-    
+
     public void Delete()
     {
       SqlConnection conn = DB.Connection();
